@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registerDevice(View view) {
-        Button iapButton = findViewById(R.id.floatingIAPButton);
+        FloatingActionButton iapButton = findViewById(R.id.floatingIAPButton);
         Button sendInfoButton = findViewById(R.id.SendInfoButton);
         String idFromPrefs = preferences.getString("device_id", "null");
         String snackbartext;
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             iapButton.setClickable(false);
             sendInfoButton.setClickable(false);
         }
-        Toast.makeText(this,snackbartext,Toast.LENGTH_LONG);
+        Toast.makeText(this, snackbartext, Toast.LENGTH_LONG).show();
     }
 
     public void sendInformation(View view) {

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">IAP Generator</string>
+    <string name="iap_information">IAP Information:</string>
+    <string name="name">Name</string>
+    <string name="amount">Amount</string>
+    <string name="e_mail_address">E-mail Address</string>
+    <string name="send_information">Send Information</string>
+    <string name="register_device">Register Device</string>
+    <string name="launch_iap">Launch IAP</string>
+</resources>

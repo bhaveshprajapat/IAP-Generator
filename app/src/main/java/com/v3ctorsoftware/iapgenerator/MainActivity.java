@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -127,15 +128,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registerDevice(View view) {
+        Button iapButton = findViewById(R.id.floatingIAPButton);
+        Button sendInfoButton = findViewById(R.id.SendInfoButton);
         String idFromPrefs = preferences.getString("device_id", "null");
         String snackbartext;
         if (!idFromPrefs.equals("null")) {
             snackbartext = "Connected or Connected before";
+            iapButton.setClickable(true);
+            sendInfoButton.setClickable(true);
         }else{
             snackbartext = "Failed to get Instance ID. Internet OK?";
+            iapButton.setClickable(false);
+            sendInfoButton.setClickable(false);
         }
-        Snackbar mySnackbar = Snackbar.make(view, snackbartext, Snackbar.LENGTH_SHORT);
-        mySnackbar.show();
+        Toast.makeText(this,snackbartext,Toast.LENGTH_LONG);
     }
 
     public void sendInformation(View view) {

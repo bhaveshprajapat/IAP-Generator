@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/IapInfoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="43dp"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         android:text="@string/iap_information"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/firstname"
+        app:layout_constraintStart_toStartOf="@+id/firstname" />
 
     <EditText
         android:id="@+id/firstname"
@@ -32,12 +34,13 @@
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="61dp"
         android:layout_marginTop="60dp"
         android:ems="10"
         android:hint="@string/e_mail_address"
         android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="@+id/amount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstname" />
 
@@ -45,43 +48,34 @@
         android:id="@+id/amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="183dp"
         android:ems="10"
         android:hint="@string/amount"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
-
-    <Button
-        android:id="@+id/SendInfoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:onClick="sendInformation"
-        android:text="@string/send_information"
-        app:layout_constraintStart_toStartOf="@+id/amount"
-        app:layout_constraintTop_toBottomOf="@+id/amount" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/RegisterDeviceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:onClick="registerDevice"
         android:text="@string/register_device"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/SendInfoButton"
-        app:layout_constraintTop_toBottomOf="@+id/SendInfoButton" />
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/amount"
+        app:layout_constraintTop_toBottomOf="@+id/amount" />
 
     <Button
-        android:id="@+id/LaunchIapButton"
+        android:id="@+id/SendInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="purchaseIAP"
-        android:text="@string/launch_iap"
+        android:layout_marginTop="1dp"
+        android:clickable="false"
+        android:onClick="sendInformation"
+        android:text="@string/send_information"
         app:layout_constraintStart_toStartOf="@+id/RegisterDeviceButton"
         app:layout_constraintTop_toBottomOf="@+id/RegisterDeviceButton" />
 
@@ -89,17 +83,19 @@
         android:id="@+id/DisplayIDButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         android:onClick="displayDeviceID"
         android:text="@string/display_id"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/LaunchIapButton"
-        app:layout_constraintTop_toBottomOf="@+id/LaunchIapButton" />
+        app:layout_constraintBottom_toBottomOf="@+id/SendInfoButton"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/surname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="@string/surname"
         android:inputType="textPersonName"
@@ -108,15 +104,17 @@
         app:layout_constraintTop_toBottomOf="@+id/firstname" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingIAPButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="18dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:clickable="true"
+        android:clickable="false"
+        android:longClickable="false"
+        android:onClick="purchaseIAP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_money_off_black_24dp" />
+        app:srcCompat="@drawable/ic_attach_money_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -75,4 +75,13 @@
         app:layout_constraintStart_toStartOf="@+id/RegisterDeviceButton"
         app:layout_constraintTop_toBottomOf="@+id/RegisterDeviceButton" />
 
+    <Button
+        android:id="@+id/DisplayIDButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="displayDeviceID"
+        android:text="Display ID"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="295dp" />
+
 </android.support.constraint.ConstraintLayout>

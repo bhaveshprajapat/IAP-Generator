@@ -1,6 +1,8 @@
 package com.v3ctorsoftware.iapgenerator;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,10 +16,13 @@ import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchaseHistoryResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private SharedPreferences preferences;
+    private String INSTANCE_ID;
     private final String PREMIUM_SKU = "premium_upgrade";
     ConsumeResponseListener listener = new ConsumeResponseListener() {
         @Override
@@ -59,7 +64,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String idFromPrefs = preferences.getString("device_id", "null");
+        if (!idFromPrefs.equals("null")) {
+            INSTANCE_ID = idFromPrefs;
+        } else {
+            INSTANCE_ID = FirebaseInstanceId.getInstance().getId();
+        }
         PurchasesUpdatedListener purchasesUpdatedListener = new PurchasesUpdatedListener() {
             @Override
             public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -91,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
                 // Google Play by calling the startConnection() method.
             }
         });
+    }
+
+    public void displayDeviceID(View view) {
+        Toast.makeText(this, INSTANCE_ID, Toast.LENGTH_LONG).show();
     }
 
     @Override

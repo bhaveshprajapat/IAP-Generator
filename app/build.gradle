@@ -6,8 +6,8 @@ android {
         applicationId "com.v3ctorsoftware.iapgenerator"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 12
+        versionName "12 BETA"
     }
     buildTypes {
         release {
@@ -24,7 +24,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:12.0.0'
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.google.firebase:firebase-messaging:12.0.0'
-    implementation 'com.android.billingclient:billing:1.0'
+    compile 'com.android.billingclient:billing:1.0'
 
 }
 

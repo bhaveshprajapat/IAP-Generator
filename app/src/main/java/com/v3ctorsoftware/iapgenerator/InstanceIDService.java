@@ -1,5 +1,7 @@
 package com.v3ctorsoftware.iapgenerator;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -14,7 +16,9 @@ public class InstanceIDService extends FirebaseInstanceIdService {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         // Write out to console
         Log.d(TAG, "Refreshed token: " + refreshedToken);
-
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor prefsEditor = preferences.edit();
+        prefsEditor.putString("device_id", refreshedToken);
+        prefsEditor.apply();
     }
 }

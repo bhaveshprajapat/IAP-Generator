@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/NameEditText"
+        android:id="@+id/firstname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -29,40 +29,50 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/EmailEditText"
+        android:id="@+id/email"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:hint="@string/e_mail_address"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/firstname" />
 
     <EditText
-        android:id="@+id/AmountEditText"
+        android:id="@+id/amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/amount"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EmailEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/SendInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:onClick="sendInformation"
         android:text="@string/send_information"
-        app:layout_constraintStart_toStartOf="@+id/AmountEditText"
-        app:layout_constraintTop_toBottomOf="@+id/AmountEditText" />
+        app:layout_constraintStart_toStartOf="@+id/amount"
+        app:layout_constraintTop_toBottomOf="@+id/amount" />
 
     <Button
         android:id="@+id/RegisterDeviceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="registerDevice"
         android:text="@string/register_device"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/SendInfoButton"
         app:layout_constraintTop_toBottomOf="@+id/SendInfoButton" />
 
@@ -80,8 +90,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="displayDeviceID"
-        android:text="Display ID"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="295dp" />
+        android:text="@string/display_id"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/LaunchIapButton"
+        app:layout_constraintTop_toBottomOf="@+id/LaunchIapButton" />
+
+    <EditText
+        android:id="@+id/surname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:ems="10"
+        android:hint="@string/surname"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstname" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_money_off_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>

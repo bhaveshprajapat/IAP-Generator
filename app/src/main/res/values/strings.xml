@@ -7,4 +7,6 @@
     <string name="send_information">Send Information</string>
     <string name="register_device">Register Device</string>
     <string name="launch_iap">Launch IAP</string>
+    <string name="display_id">Display ID</string>
+    <string name="surname">Surname</string>
 </resources>

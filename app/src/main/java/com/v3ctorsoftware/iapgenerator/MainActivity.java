@@ -21,6 +21,9 @@ import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchaseHistoryResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,17 +41,85 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private String INSTANCE_ID;
     private final String PREMIUM_SKU = "premium_upgrade";
+    final String[] price = {"undefined"};
     ConsumeResponseListener listener = new ConsumeResponseListener() {
         @Override
         public void onConsumeResponse(@BillingResponse int responseCode, String outToken) {
             if (responseCode == BillingResponse.OK) {
-                Toast.makeText(getApplicationContext(), "Consumed purchase", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), "Just purchased item has been consumed", Toast.LENGTH_SHORT).show();
+                String url = "https://iapgenerator.appspot.com/onPurchase.php";
+                final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Log.d("Response", response);
+                                final Snackbar snackBar = Snackbar.make(getCurrentFocus(), "Success! You'll receive an email confirmation soon. You will be notified on this device when IAPG is ready", Snackbar.LENGTH_INDEFINITE);
+                                snackBar.setAction("Dismiss", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        snackBar.dismiss();
+                                    }
+                                });
+                                snackBar.show();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.getMessage());
+                                final Snackbar snackBar = Snackbar.make(getCurrentFocus(), "Oops, something went wrong", Snackbar.LENGTH_INDEFINITE);
+                                snackBar.setAction("Dismiss", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        snackBar.dismiss();
+                                    }
+                                });
+                                snackBar.show();
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("fid", preferences.getString("device_id", "null"));
+                        params.put("amount", price[0]);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("Content-Type", "application/x-www-form-urlencoded");
+                        return params;
+                    }
+                };
+                queue.add(postRequest);
             }
         }
     };
     private BillingClient mBillingClient;
 
     public void purchaseIAP(View view) {
+        List<String> skuList = new ArrayList<>();
+        skuList.add(PREMIUM_SKU);
+        SkuDetailsParams.Builder sparams = SkuDetailsParams.newBuilder();
+        sparams.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
+        mBillingClient.querySkuDetailsAsync(sparams.build(),
+                new SkuDetailsResponseListener() {
+                    @Override
+                    public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
+                        for(SkuDetails skud : skuDetailsList){
+                            if(skud.getSku().equals(PREMIUM_SKU))
+                                price[0] = skud.getPrice();
+                        }
+                    }
+                });
         BillingFlowParams flowParams = BillingFlowParams.newBuilder()
                 .setSku(PREMIUM_SKU)
                 .setType(BillingClient.SkuType.INAPP)
@@ -77,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
                 if (responseCode == BillingResponse.OK
                         && purchases != null) {
                     for (Purchase purchase : purchases) {
+                        if(purchase.getSku().equals(PREMIUM_SKU)){
+
+
+                        }
                         mBillingClient.consumeAsync(purchase.getPurchaseToken(), listener);
                     }
                 } else if (responseCode == BillingResponse.USER_CANCELED) {
@@ -205,7 +281,5 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         queue.add(postRequest);
-
-
     }
 }
